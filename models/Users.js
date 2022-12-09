@@ -8,10 +8,12 @@ const UserSchema = new mongoose.Schema({
     counter: {
         type: Number,
     },
-    // lastCycle: {
-    //     type: Date,
-    //     default: Date.now,
-    // }
+    lastDate: {
+        type: Date,
+    },
+    email: {
+        type: String,
+    }
 })
 
 module.exports = mongoose.model('User', UserSchema)

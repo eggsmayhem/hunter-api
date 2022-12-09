@@ -12,7 +12,7 @@ module.exports = {
             console.log("receivedId " + receivedId);
             // const user = Users.findOne({firebase: receivedId});
             // const verifyId = user.firebase;
-            const verifyId = "K3zo9YSEejSyTXLeD3PZflw96xD2";
+            const verifyId = "W1UCiMBG6ogdRIoe5SivAwzGnba2";
             if (receivedId === verifyId) {
                 //call with text from user to OpenAI
                 res.status(200).json("User verified!")
@@ -45,7 +45,7 @@ module.exports = {
             console.log("receivedId " + receivedId);
             // const user = Users.findOne({firebase: receivedId});
             // const verifyId = user.firebase;
-            const verifyId = "K3zo9YSEejSyTXLeD3PZflw96xD2";
+            const verifyId = "W1UCiMBG6ogdRIoe5SivAwzGnba2";
             if (receivedId === verifyId) {
                 const bod = req.body;
                 const userText = bod.data.text;
@@ -110,7 +110,7 @@ module.exports = {
             console.log("receivedId " + receivedId);
             // const user = Users.findOne({firebase: receivedId});
             // const verifyId = user.firebase;
-            const verifyId = "K3zo9YSEejSyTXLeD3PZflw96xD2";
+            const verifyId = "W1UCiMBG6ogdRIoe5SivAwzGnba2";
             if (receivedId === verifyId) {
                 const newskey = process.env.NEWS_API_KEY;
                 const theNews = await axios.get(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${newskey}`);

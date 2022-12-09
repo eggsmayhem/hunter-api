@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true})); 
 app.use(logger('dev'));
 app.use(cors())
-app.use('/', userRoutes)
+app.use('/users', userRoutes)
 app.use('/exchanges', exchangesRoutes)
 
  
