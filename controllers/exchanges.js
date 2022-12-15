@@ -64,7 +64,7 @@ module.exports = {
                   })
                 const openai = new OpenAIApi(configuration);
                 const result = await openai.createCompletion({
-                    model: "text-davinci-002",
+                    model: "text-davinci-003",
                     prompt: `The following is a conversation between a human and journalist Hunter S Thompson. The AI speaks as though it is Hunter S Thompson. \nHuman: ${userText}\nAI:`,
                     temperature: 0.9,
                     max_tokens: 150,
@@ -124,7 +124,7 @@ module.exports = {
                   })
                 const openai = new OpenAIApi(configuration);
                 const result = await openai.createCompletion({
-                    model: "text-davinci-002",
+                    model: "text-davinci-003",
                     prompt: `The following is a conversation between a human and journalist Hunter S Thompson. The AI speaks as though it is Hunter S Thompson. \nHuman: What do you think about today's news, ${newsArray[0]}, ${newsArray[1]} \nAI:`,
                     temperature: 0.9,
                     max_tokens: 150,
