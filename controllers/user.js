@@ -9,9 +9,10 @@ module.exports = {
             console.log("receivedId " + receivedId);
             // const user = Users.findOne({firebase: receivedId});
             // const verifyId = user.firebase;
-            const verifyId = "W1UCiMBG6ogdRIoe5SivAwzGnba2";
+            const verifyId = "WHWeU8n5H1aS10avca9n3jQQqaMX2";
             if (receivedId === verifyId) {
-                res.status(200).json("User verified!")
+                // res.status(200).json("User verified!")
+                console.log("User " + receivedId + " verified!")
             }
         }catch(err){
             res.status(500).json(err)
@@ -20,17 +21,20 @@ module.exports = {
     createUser: async (req,res)=>{
         try{
             const receivedId = await req.params.uid
-            const date = await new Date();
+            // const date = await new Date();
             //receivedID WAS received 
             console.log("receivedId " + receivedId);
             // const user = Users.findOne({firebase: receivedId});
             // const verifyId = user.firebase;
             // const verifyId = "K3zo9YSEejSyTXLeD3PZflw96xD2";
             //This is receiving the params but returning a 500 and not creating the user object
-            const user = await User.create({firebase: receivedId, lastDate: date});
+            //removing await, and new error as seen below
+            const user = User.create({firebase: receivedId});
             console.log(user + " user created!");
         }catch(err){
             res.status(500).json(err)
         }
     },
+    //test route
+
 }    

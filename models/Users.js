@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const UserSchema = new mongoose.Schema({
     firebase: {
         type: String,
-        unique: true,
     },
     counter: {
         type: Number,
