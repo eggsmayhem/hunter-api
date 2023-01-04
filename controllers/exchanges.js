@@ -63,6 +63,8 @@ module.exports = {
         const configuration = new Configuration({
           apiKey: process.env.OPEN_API_KEY,
         });
+        //I believe that my OpenAI settings should automatically limit the length of user input allowed, but I should check on this so users don't try to submit long documents. 
+        
         const openai = new OpenAIApi(configuration);
         const result = await openai.createCompletion({
           model: 'text-davinci-003',
@@ -88,14 +90,18 @@ module.exports = {
         // // console.log(postText + "butttt")
         const s3_url = await speech.data.url;
         console.log(s3_url);
-        //after we get the mongosave working, see if we can put it after res.status(200) to speed up data to frontend
-        const message = new Exchange({
-          firebase: receivedId,
-          userSpeech: userText, 
-        })
+        console.log('message has been created!');
+
         res.status(200).json({
           message: 'Success!',
           s3: s3_url,
+        });
+        const message = Exchange.create({
+          firebase: receivedId,
+          userSpeech: userText, 
+          hunterSpeech: hunterText,
+          category: "conversation",
+          s3_url: s3_url,
         });
       }
       if (receivedId !== verifyId) {
