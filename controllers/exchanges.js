@@ -1,6 +1,6 @@
 // below throws error, but we will be attaching it to a MongoDB later, so leave it
 // const User = require('../models/Users');
-// const Exchanges = require('../models/Exchanges');
+const Exchange = require('../models/Exchanges');
 const { Configuration, OpenAIApi, } = require('openai');
 const axios = require('axios');
 
@@ -88,6 +88,11 @@ module.exports = {
         // // console.log(postText + "butttt")
         const s3_url = await speech.data.url;
         console.log(s3_url);
+        //after we get the mongosave working, see if we can put it after res.status(200) to speed up data to frontend
+        const message = new Exchange({
+          firebase: receivedId,
+          userSpeech: userText, 
+        })
         res.status(200).json({
           message: 'Success!',
           s3: s3_url,
