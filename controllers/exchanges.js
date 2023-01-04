@@ -64,7 +64,7 @@ module.exports = {
           apiKey: process.env.OPEN_API_KEY,
         });
         //I believe that my OpenAI settings should automatically limit the length of user input allowed, but I should check on this so users don't try to submit long documents. 
-        
+
         const openai = new OpenAIApi(configuration);
         const result = await openai.createCompletion({
           model: 'text-davinci-003',
@@ -128,6 +128,7 @@ module.exports = {
         const resultsAmount = await theNews.data.articles.length;
         const articleNum = Math.floor(Math.random() * resultsAmount);
         const newsArray = [theNews.data.articles[articleNum].title, theNews.data.articles[articleNum].description];
+        console.log(typeof newsArray)
 
         const configuration = new Configuration({
           apiKey: process.env.OPEN_API_KEY,
@@ -162,6 +163,15 @@ module.exports = {
           s3: s3_url,
           newsArray,
           hunterText,
+        });
+        const newsString = newsArray.join(', ');
+
+        const message = Exchange.create({
+          firebase: receivedId,
+          userSpeech: newsString, 
+          hunterSpeech: hunterText,
+          category: "news",
+          s3_url: s3_url,
         });
       }
       if (receivedId !== verifyId) {
