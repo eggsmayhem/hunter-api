@@ -1,5 +1,5 @@
 // below throws error, but we will be attaching it to a MongoDB later, so leave it
-// const User = require('../models/Users');
+const Users = require('../models/Users');
 const Exchange = require('../models/Exchanges');
 const { Configuration, OpenAIApi, } = require('openai');
 const axios = require('axios');
@@ -44,21 +44,13 @@ module.exports = {
       console.log(receivedId);
       // receivedID WAS received
       console.log('receivedId ' + receivedId);
-      // const user = Users.findOne({firebase: receivedId});
-      // const verifyId = user.firebase;
-      const verifyId = 'W1UCiMBG6ogdRIoe5SivAwzGnba2';
-      if (receivedId === verifyId) {
+      const user = await Users.findOne({firebase: receivedId});
+      if (user) {
         const bod = req.body;
         const userText = bod.data.text;
         console.log(userText);
-        // res.status(200).json("Success")
+ 
         console.log(bod);
-        // res.status(200).json({
-        //     message: "Success!",
-        //     body: bod
-        // })
-        // do the thing
-        // const body = await req.body;
 
         const configuration = new Configuration({
           apiKey: process.env.OPEN_API_KEY,
@@ -87,7 +79,6 @@ module.exports = {
 
         // console.log(hunterText);
         const speech = await axios.post(process.env.BUCKET_NAME, textToSpeech);
-        // // console.log(postText + "butttt")
         const s3_url = await speech.data.url;
         console.log(s3_url);
         console.log('message has been created!');
@@ -104,7 +95,7 @@ module.exports = {
           s3_url: s3_url,
         });
       }
-      if (receivedId !== verifyId) {
+      if (!user) {
         res.status(500).json('You must be logged in to access the hunterbotAPI. Contact us if you believe there is an error');
       }
     } catch (err) {
@@ -116,12 +107,12 @@ module.exports = {
       // the req body will need text, the result will send the S3bcketURI, newstext if relevant
       const receivedId = await req.params.uid;
       console.log(receivedId);
-      // receivedID WAS received
+    
       console.log('receivedId ' + receivedId);
-      // const user = Users.findOne({firebase: receivedId});
-      // const verifyId = user.firebase;
-      const verifyId = 'W1UCiMBG6ogdRIoe5SivAwzGnba2';
-      if (receivedId === verifyId) {
+
+      const user = await Users.findOne({firebase: receivedId});
+
+      if (user) {
         const newskey = process.env.NEWS_API_KEY;
         const theNews = await axios.get(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${newskey}`);
         console.log(theNews.data.articles.length);
@@ -155,7 +146,7 @@ module.exports = {
 
         // console.log(hunterText);
         const speech = await axios.post(process.env.BUCKET_NAME, textToSpeech);
-        // // console.log(postText + "butttt")
+
         const s3_url = await speech.data.url;
         console.log(s3_url);
         res.status(200).json({
@@ -174,7 +165,7 @@ module.exports = {
           s3_url: s3_url,
         });
       }
-      if (receivedId !== verifyId) {
+      if (!user) {
         res.status(500).json('You must be logged in to access the hunterbotAPI. Contact us if you believe there is an error');
       }
     } catch (err) {
