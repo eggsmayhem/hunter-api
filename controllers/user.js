@@ -21,7 +21,8 @@ module.exports = {
     createUser: async (req,res)=>{
         try{
             const receivedId = await req.params.uid
-            // const date = await new Date();
+            const fulldate = new Date();
+            const date = fulldate.getDate();
             //receivedID WAS received 
             console.log("receivedId " + receivedId);
             // const user = Users.findOne({firebase: receivedId});
@@ -29,7 +30,7 @@ module.exports = {
             // const verifyId = "K3zo9YSEejSyTXLeD3PZflw96xD2";
             //This is receiving the params but returning a 500 and not creating the user object
             //removing await, and new error as seen below
-            const user = User.create({firebase: receivedId});
+            const user = User.create({firebase: receivedId, lastDate: date, counter: 0});
             console.log(user + " user created!");
         }catch(err){
             res.status(500).json(err)

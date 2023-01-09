@@ -111,8 +111,28 @@ module.exports = {
       console.log('receivedId ' + receivedId);
 
       const user = await Users.findOne({firebase: receivedId});
+      console.log(user);
 
       if (user) {
+        const oldDate = user.lastDate; //29
+        const newDate =  new Date().getDate(); //31
+        const count = user.counter;
+        console.log(count);
+        //if same day, check rate limiting counter, increment by one
+        if (newDate - oldDate < 1) {
+          if (count >=30) {
+            res.status(500).json('You are out of requests for today, please come back tomorrow');
+          }
+          else {
+            await user.update({$inc: {counter: 1}});
+          }
+        }
+        //if it's been more than a day, reset lastDate and counter in user model
+        if (newDate - oldDate >=1) {
+          const dateReset = newDate();
+          await user.update({lastDate: newDate});
+          await user.update({counter: 0});
+        }
         const newskey = process.env.NEWS_API_KEY;
         const theNews = await axios.get(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${newskey}`);
         console.log(theNews.data.articles.length);
