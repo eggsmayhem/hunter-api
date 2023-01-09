@@ -3,6 +3,7 @@ const Users = require('../models/Users');
 const Exchange = require('../models/Exchanges');
 const { Configuration, OpenAIApi, } = require('openai');
 const axios = require('axios');
+const { ConfigurationServicePlaceholders } = require('aws-sdk/lib/config_service_placeholders');
 
 module.exports = {
 //   helloUser: async (req, res) => {
@@ -38,7 +39,12 @@ module.exports = {
   //     }
   //   },
   helloWorld: async (req, res) => {
-    res.send(200).json('Welcome to the hunterbot API!')
+    try {
+      res.send(200).json('Welcome to the hunterbot API!')
+    }
+    catch(err) {
+      console.log(err)
+    }
   },
   speakToHunter: async (req, res) => {
     try {
