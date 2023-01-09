@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
         type: Number,
     },
     lastDate: {
-        type: Date,
+        type: Number,
     },
     email: {
         type: String,
