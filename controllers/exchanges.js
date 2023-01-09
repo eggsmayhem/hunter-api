@@ -3,7 +3,6 @@ const Users = require('../models/Users');
 const Exchange = require('../models/Exchanges');
 const { Configuration, OpenAIApi, } = require('openai');
 const axios = require('axios');
-const { ConfigurationServicePlaceholders } = require('aws-sdk/lib/config_service_placeholders');
 
 module.exports = {
 //   helloUser: async (req, res) => {
