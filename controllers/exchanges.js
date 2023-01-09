@@ -37,6 +37,9 @@ module.exports = {
   //       res.status(500).json(err);
   //     }
   //   },
+  helloWorld: async (req, res) => {
+    res.send(200).json('Welcome to the hunterbot API!')
+  },
   speakToHunter: async (req, res) => {
     try {
       // the req body will need text, the result will send the S3bcketURI, newstext if relevant
