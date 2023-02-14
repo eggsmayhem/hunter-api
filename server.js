@@ -16,6 +16,7 @@ connectDB()
 // app.use(bodyParser.json());
 
 app.use(express.json());
+app.options('*', cors());
 app.use(express.urlencoded({extended:true})); 
 app.use(logger('dev'));
 app.use(cors())
@@ -26,6 +27,6 @@ app.use('/exchanges', exchangesRoutes)
 // app.use('/plants', plantRoutes)
 // app.use('/id', idRoutes)
  
-app.listen(process.env.PORT || 3000, ()=>{
+app.listen(process.env.PORT || 8000, ()=>{
     console.log('Server is running, you better catch it!')
 })   
