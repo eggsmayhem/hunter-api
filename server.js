@@ -16,7 +16,7 @@ connectDB()
 // app.use(bodyParser.json());
 
 app.use(express.json());
-app.options('*', cors());
+// app.options('*', cors());
 app.use(express.urlencoded({extended:true})); 
 app.use(logger('dev'));
 app.use(cors())

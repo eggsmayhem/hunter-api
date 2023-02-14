@@ -6,38 +6,6 @@ const axios = require('axios');
 
 
 module.exports = {
-//   helloUser: async (req, res) => {
-//     console.log(req.user);
-//     try {
-//       const receivedId = await req.params.uid;
-//       // receivedID WAS received
-//       console.log('receivedId ' + receivedId);
-//       // const user = Users.findOne({firebase: receivedId});
-//       // const verifyId = user.firebase;
-//       const verifyId = 'W1UCiMBG6ogdRIoe5SivAwzGnba2';
-//       if (receivedId === verifyId) {
-//         // call with text from user to OpenAI
-//         res.status(200).json('User verified!');
-//         const openai = new OpenAIApi(configuration);
-//         const result = await openai.createCompletion({
-//           model: 'text-davinci-002',
-//           prompt: `The following is a conversation between a human and journalist Hunter S Thompson. The AI speaks as though it is Hunter S Thompson. \nHuman: What do you think about today's news, ${newsArray[0]}, ${newsArray[1]} \nAI:`,
-//           temperature: 0.9,
-//           max_tokens: 150,
-//           top_p: 1,
-//           frequency_penalty: 0,
-//           presence_penalty: 0.6,
-//           stop: [' Human:', ' AI:'],
-//         });
-
-  //         const hunterText = result.data.choices[0].text;
-  //         console.log('this should be hunters response' + hunterText);
-  //         // end of openAI call
-  //       }
-  //     } catch (err) {
-  //       res.status(500).json(err);
-  //     }
-  //   },
   helloWorld: async (req, res) => {
     try {
       res.send(200).json('Welcome to the hunterbot API!')
@@ -48,25 +16,13 @@ module.exports = {
   },
   speakToHunter: async (req, res) => {
     try {
-      // the req body will need text, the result will send the S3bcketURI, newstext if relevant
-      // const receivedId = await req.params.uid;
-      // console.log(receivedId);
-      // // receivedID WAS received
-      // console.log('receivedId ' + receivedId);
-      // const user = await Users.findOne({firebase: receivedId});
-      // if (user) {
-      //   const bod = req.body;
-      //   const userText = bod.data.text;
-      //   console.log(userText);
- 
-      //   console.log(bod);
         console.log(req.body);
         const userText = await req.body.text;
         console.log(userText);
         const configuration = new Configuration({
           apiKey: process.env.OPEN_API_KEY,
         });
-        //I believe that my OpenAI settings should automatically limit the length of user input allowed, but I should check on this so users don't try to submit long documents. 
+        //I believe that my OpenAI settings should automatically limit the length of user input allowed, but I should check on this so users don't try to submit long documents.  Max_tokens likely handles this? 
      
 
         const openai = new OpenAIApi(configuration);
@@ -100,27 +56,20 @@ module.exports = {
           hunterText: hunterText,
           s3: s3_url,
         });
-        // res.status(200).json({
-        //   message: 'Success!',
-        //   s3: "test"
-        // });
         
-        // const message = Exchange.create({
-        //   firebase: receivedId,
-        //   userSpeech: userText, 
-        //   hunterSpeech: hunterText,
-        //   category: "conversation",
-        //   s3_url: s3_url,
-        // });
+        const message = Exchange.create({
+          userSpeech: userText, 
+          hunterSpeech: hunterText,
+          category: "conversation",
+          s3_url: s3_url,
+        });
       }
-      // if (!user) {
-      //   res.status(500).json('You must be logged in to access the hunterbotAPI. Contact us if you believe there is an error');
-      // }
       catch (err) {
       console.log(err);
     }
   },
   getTheNews: async (req, res) => {
+    console.log(req);
     try {
       // the req body will need text, the result will send the S3bcketURI, newstext if relevan
         const newskey = process.env.NEWS_API_KEY;
@@ -155,7 +104,6 @@ module.exports = {
           voice: 'Joey',
         };
 
-        // console.log(hunterText);
         const speech = await axios.post(process.env.BUCKET_NAME, textToSpeech);
 
         const s3_url = await speech.data.url;
@@ -166,15 +114,14 @@ module.exports = {
           newsArray,
           hunterText,
         });
-        // const newsString = newsArray.join(', ');
+        const newsString = newsArray.join(', ');
 
-        // const message = Exchange.create({
-        //   firebase: receivedId,
-        //   userSpeech: newsString, 
-        //   hunterSpeech: hunterText,
-        //   category: "news",
-        //   s3_url: s3_url,
-        // });
+        const message = Exchange.create({
+          userSpeech: newsString, 
+          hunterSpeech: hunterText,
+          category: "news",
+          s3_url: s3_url,
+        });
       }
       
      catch (err) {
