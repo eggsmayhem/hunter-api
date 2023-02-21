@@ -8,7 +8,8 @@ const axios = require('axios');
 module.exports = {
   helloWorld: async (req, res) => {
     try {
-      res.send(200).json('Welcome to the hunterbot API!')
+        console.log('done');
+        res.status(200).json('Welcome to the hunterbot API!')
     }
     catch(err) {
       console.log(err)
