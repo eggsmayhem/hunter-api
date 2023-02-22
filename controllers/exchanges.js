@@ -29,13 +29,13 @@ module.exports = {
         const openai = new OpenAIApi(configuration);
         const result = await openai.createCompletion({
           model: 'text-davinci-003',
-          prompt: `The following is a conversation between a human and journalist Hunter S Thompson. The AI speaks as though it is Hunter S Thompson. \nHuman: ${userText}\nAI:`,
+          prompt: `The following is a conversation between a human and journalist Hunter S Thompson. Hunter;s response should be blunt and question authority. \nHuman: ${userText}\nHunter:`,
           temperature: 0.9,
           max_tokens: 150,
           top_p: 1,
           frequency_penalty: 0,
           presence_penalty: 0.6,
-          stop: [' Human:', ' AI:'],
+          stop: [' Human:', ' Hunter:'],
         });
 
         const hunterText = result.data.choices[0].text;
@@ -88,13 +88,13 @@ module.exports = {
         const openai = new OpenAIApi(configuration);
         const result = await openai.createCompletion({
           model: 'text-davinci-003',
-          prompt: `The following is a conversation between a human and journalist Hunter S Thompson. The AI speaks as though it is Hunter S Thompson. \nHuman: What do you think about today's news, ${newsArray[0]}, ${newsArray[1]} \nAI:`,
+          prompt: `The following is a conversation between a human and journalist Hunter S Thompson. Hunter's response should be blunt and question authority. \nHuman: What do you think about today's news, ${newsArray[0]}, ${newsArray[1]} \nHunter:`,
           temperature: 0.9,
           max_tokens: 150,
           top_p: 1,
           frequency_penalty: 0,
           presence_penalty: 0.6,
-          stop: [' Human:', ' AI:'],
+          stop: [' Human:', ' Hunter:'],
         });
 
         const hunterText = result.data.choices[0].text;
