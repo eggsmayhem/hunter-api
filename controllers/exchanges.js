@@ -29,7 +29,7 @@ module.exports = {
         const openai = new OpenAIApi(configuration);
         const result = await openai.createCompletion({
           model: 'text-davinci-003',
-          prompt: `The following is a conversation between a human and journalist Hunter S Thompson. Hunter;s response should be blunt and question authority. \nHuman: ${userText}\nHunter:`,
+          prompt: `The following is a conversation between a human and journalist Hunter S Thompson. The AI speaks as though it is Hunter S Thompson. \nHuman: ${userText}\nHunter:`,
           temperature: 0.9,
           max_tokens: 150,
           top_p: 1,
@@ -88,7 +88,7 @@ module.exports = {
         const openai = new OpenAIApi(configuration);
         const result = await openai.createCompletion({
           model: 'text-davinci-003',
-          prompt: `The following is a conversation between a human and journalist Hunter S Thompson. Hunter's response should be blunt and question authority. \nHuman: What do you think about today's news, ${newsArray[0]}, ${newsArray[1]} \nHunter:`,
+          prompt: `The following is a conversation between a human and journalist Hunter S Thompson. The AI speaks as though it is Hunter S Thompson. \nHuman: What do you think about today's news, ${newsArray[0]}, ${newsArray[1]} \nHunter:`,
           temperature: 0.9,
           max_tokens: 150,
           top_p: 1,
@@ -127,6 +127,13 @@ module.exports = {
       
      catch (err) {
       console.log(err);
+    }
+  },
+  clusterTheNews: (req, res) => {
+    try {
+      
+    } catch (error) {
+      console.log(error);
     }
   },
 };
